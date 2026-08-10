@@ -1,5 +1,5 @@
 /* ================================================================
-   立川华人教会 — 交互脚本
+   東京中神教会 — 交互脚本
 ================================================================ */
 (() => {
   "use strict";
@@ -37,6 +37,7 @@
     let cur = "home";
     $$("section[id]").forEach((s) => { if (s.offsetTop <= y) cur = s.id; });
     $$(".nav-link").forEach((l) => l.classList.toggle("active", l.getAttribute("href") === "#" + cur));
+    $$(".bn-item").forEach((l) => l.classList.toggle("active", l.dataset.sec === cur));
   };
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
@@ -165,22 +166,22 @@
   ];
   const RESULT = {
     youth: {
-      name: "立川青年小组", time: "每周五 · 一起吃饭、聊天、读圣经", icon: "i-coffee",
+      name: "中神青年小组", time: "每周五 · 一起吃饭、聊天、读圣经", icon: "i-coffee",
       desc: "看起来你很在意真实的联结——有人能说话、能一起吃饭、能一起成长。青年小组就是这样一个小而暖的地方：没有压力，做你自己就好。",
       cta: "第一次参加"
     },
     work: {
-      name: "立川职场小组", time: "每月两次 · 周六上午", icon: "i-briefcase",
+      name: "中神职场小组", time: "每月两次 · 周六上午", icon: "i-briefcase",
       desc: "你正在认真生活，也在认真寻找意义。职场小组聚集了一群同样在工作与信仰之间探索的人：聊聊压力、方向，也一起读圣经。",
       cta: "第一次参加"
     },
     family: {
-      name: "立川家庭小组", time: "每月一次 · 家庭聚餐", icon: "i-home",
+      name: "中神家庭小组", time: "每月一次 · 家庭聚餐", icon: "i-home",
       desc: "你把家放在心上。家庭小组是给夫妻和父母的地方：一起学习怎么爱、怎么教、怎么在忙碌里守住家。欢迎带孩子一起来。",
       cta: "第一次参加"
     },
     student: {
-      name: "立川留学生小组", time: "每周六 · 中文 + 日语欢迎", icon: "i-globe",
+      name: "中神留学生小组", time: "每周六 · 中文 + 日语欢迎", icon: "i-globe",
       desc: "刚来到东京，或者正在找方向——不用一个人扛。留学生小组里有同样在适应新生活的人，也有已经走过这段路的人。",
       cta: "第一次参加"
     }
@@ -402,7 +403,7 @@
       <span class="topic__tag">生活 · 儿童</span>
       <h3>欢迎来到儿童世界 👋</h3>
       <div class="topic__verse">教养孩童，使他走当行的道，就是到老他也不偏离。—— 箴言 22:6</div>
-      <p>在立川，我们有给孩子的故事时间、圣经动画、亲子灵修和家庭活动。孩子们在这里被爱、被听见，也在歌声和故事里认识那位爱他们的上帝。</p>
+      <p>在中神，我们有给孩子的故事时间、圣经动画、亲子灵修和家庭活动。孩子们在这里被爱、被听见，也在歌声和故事里认识那位爱他们的上帝。</p>
       <div class="topic__ask"><b>💛 给爸爸妈妈</b>欢迎带孩子一起来！第一次来也没关系，我们慢慢来。</div>
       <div class="topic__actions">
         <button class="btn btn--primary" data-go="prayer">带孩子来聊聊</button>

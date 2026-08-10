@@ -428,3 +428,37 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
   html{scroll-behavior:auto}
 }
+
+/* ============ 手机版：底部导航 ============ */
+.bottom-nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:75;
+  display:none;align-items:stretch;justify-content:space-around;
+  background:rgba(250,246,239,.94);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);
+  padding:6px 6px calc(6px + env(safe-area-inset-bottom));
+  box-shadow:0 -10px 30px -18px rgba(36,51,45,.25);
+}
+.bn-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  padding:7px 4px;border-radius:14px;font-size:11px;font-weight:700;color:var(--ink-soft);
+  transition:color .2s,background .2s,transform .2s;
+}
+.bn-item .ic{width:22px;height:22px;color:currentColor}
+.bn-item:active{transform:scale(.94)}
+.bn-item.active{color:var(--green);background:var(--green-soft)}
+.bn-item--pray.active{color:#D96A5B;background:var(--coral-soft)}
+@media (max-width:860px){
+  .bottom-nav{display:flex}
+  body{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+  .mobile-menu{padding-bottom:calc(130px + env(safe-area-inset-bottom))}
+}
+
+/* ============ 教会信息 + 地图 ============ */
+.about__map{margin-top:58px}
+.map-card{background:var(--card);border:1.5px solid var(--line-soft);border-radius:24px;overflow:hidden;box-shadow:var(--shadow)}
+.map-card__head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:20px 24px}
+.map-card__info b{font-size:19px;font-weight:900;display:block}
+.map-card__info span{font-size:14px;color:var(--ink-soft)}
+.map-embed iframe{width:100%;height:360px;border:0;display:block;filter:saturate(.9)}
+@media (max-width:560px){ .map-embed iframe{height:270px} .map-card__head{padding:16px 16px} }
