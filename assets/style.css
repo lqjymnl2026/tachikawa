@@ -621,3 +621,11 @@ main > section,.quiet,.creeds,.contact,.explore{line-height:1.8}
   .cs-info{gap:12px}
   .cs-item b,.cs-item span{font-size:15px}
 }
+
+/* ============ 首页邀请卡片 · 含二维码 ============ */
+.invite__inner{display:flex;align-items:center;gap:30px}
+.invite__main{flex:1;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.invite__qr{flex:none;display:flex;flex-direction:column;align-items:center;gap:10px}
+.invite__qr img{width:172px;height:172px;object-fit:cover;border-radius:16px;padding:8px;background:#fff;box-shadow:0 14px 30px -16px rgba(36,51,45,.4);aspect-ratio:auto}
+.invite__qr span{font-size:12.5px;color:var(--ink-soft)}
+@media (max-width:860px){.invite__inner{flex-direction:column;align-items:center}.invite__main{justify-content:center;text-align:center}.invite__actions{justify-content:center}}
