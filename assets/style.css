@@ -621,25 +621,3 @@ main > section,.quiet,.creeds,.contact,.explore{line-height:1.8}
   .cs-info{gap:12px}
   .cs-item b,.cs-item span{font-size:15px}
 }
-
-/* ============ 赞美诗轻音乐播放器 ============ */
-.music{position:fixed;right:18px;bottom:18px;z-index:95}
-.music__fab{width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green-deep));color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 12px 30px -10px rgba(46,107,94,.6);transition:transform .25s var(--ease);border:2px solid rgba(255,255,255,.35)}
-.music__fab:hover{transform:scale(1.08) rotate(-6deg)}
-.music__fab::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(46,107,94,.35);animation:musicPulse 2.6s ease-out infinite}
-@keyframes musicPulse{0%{transform:scale(.9);opacity:.8}70%{transform:scale(1.25);opacity:0}100%{opacity:0}}
-.music__card{position:absolute;right:0;bottom:70px;width:262px;background:rgba(250,246,239,.96);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1.5px solid var(--line);border-radius:20px;padding:18px 18px 14px;box-shadow:0 24px 60px -24px rgba(36,51,45,.4);animation:slideUp .35s var(--ease)}
-.music__head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.music__head b{font-size:14.5px;font-weight:900}
-.music__close{width:28px;height:28px;border-radius:50%;background:var(--paper);color:var(--ink-soft);font-size:13px}
-.music__tracks{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
-.music__track{display:flex;justify-content:space-between;align-items:center;background:var(--paper);border:1.5px solid var(--line-soft);border-radius:12px;padding:9px 12px;font-size:13.5px;font-weight:700;transition:all .2s}
-.music__track:hover{border-color:var(--green-2);color:var(--green)}
-.music__track .music__track-state{font-size:11px;color:var(--green);font-weight:800}
-.music__controls{display:flex;align-items:center;gap:12px;padding:10px 4px 0;border-top:1px dashed var(--line)}
-.music__play{width:42px;height:42px;border-radius:50%;background:var(--green);color:#fff;font-size:16px;flex:none;transition:transform .2s}
-.music__play:hover{transform:scale(1.08)}
-.music__now{flex:1;font-size:13px;font-weight:800;color:var(--green-deep);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.music__mute{font-size:16px;color:var(--ink-soft);padding:6px}
-.music__hint{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:10px}
-@media (max-width:860px){.music{right:14px;bottom:calc(74px + env(safe-area-inset-bottom))}.music__card{right:0}}

@@ -152,7 +152,6 @@
     sixtyTimers.push(setInterval(tick, 500));
   };
   function startSixty() {
-    if (audio.playing) stopMusic();
     sixtyOpen = true;
     sixty.classList.add("open");
     sixty.setAttribute("aria-hidden", "false");
@@ -177,106 +176,87 @@
   $("#quietStart").addEventListener("click", startSixty);
 
 
-  /* ================================================================
-     赞美诗轻音乐播放器（WebAudio 合成）
-  ================================================================ */
-  const MUSIC = [
-    { name: "奇异恩典", bpm: 80, notes: [
-      [72,1],[76,.5],[77,.5],[79,1],[76,.5],[74,.5],[72,1],[69,1.5],
-      [72,1],[76,.5],[77,.5],[79,1],[76,1],[74,1],[72,1.5],
-      [72,1],[76,.5],[77,.5],[79,1],[81,1],[79,1],[77,.5],[76,.5],[74,1],[72,1],[74,1],
-      [76,1],[72,.5],[74,.5],[76,1],[72,2]
-    ] },
-    { name: "平安夜", bpm: 78, notes: [
-      [67,1],[69,1],[67,1],[64,1.5],
-      [67,1],[69,1],[67,1],[64,1.5],
-      [74,1],[74,1],[71,1],[72,1.5],
-      [67,1],[72,1],[76,1],[74,1.5],
-      [77,1],[76,1],[74,1],[72,1],[74,1],[76,1],
-      [69,1],[67,1],[64,1],[67,2]
-    ] }
-  ];
-  const musicEl = $("#music"), musicCard = $("#musicCard"), musicFab = $("#musicFab");
-  const musicPlay = $("#musicPlay"), musicNow = $("#musicNow"), musicMute = $("#musicMute");
-  const musicTracks = $("#musicTracks");
-  const audio = { ctx: null, playing: false, track: 0, vol: 0.6, endTimer: null, muted: false };
 
-  function ensureAudio() {
-    if (!audio.ctx) audio.ctx = new (window.AudioContext || window.webkitAudioContext)();
-    if (audio.ctx.state === "suspended") audio.ctx.resume();
-    return audio.ctx;
+  /* ================================================================
+     背景赞美诗轻音乐：首次交互后播放，之后每 10 分钟 1 次
+  ================================================================ */
+  const BG_NOTES = [
+    // —— 奇异恩典 ——
+    [72,1],[76,.5],[77,.5],[79,1],[76,.5],[74,.5],[72,1],[69,1.5],
+    [72,1],[76,.5],[77,.5],[79,1],[76,1],[74,1],[72,1.5],
+    [72,1],[76,.5],[77,.5],[79,1],[81,1],[79,1],[77,.5],[76,.5],[74,1],[72,1],[74,1],
+    [76,1],[72,.5],[74,.5],[76,1],[72,2],
+    [72,1],[76,.5],[77,.5],[79,1],[76,.5],[74,.5],[72,1],[69,1.5],
+    [72,1],[76,.5],[77,.5],[79,1],[76,1],[74,1],[72,1.5],
+    [72,1],[76,.5],[77,.5],[79,1],[81,1],[79,1],[77,.5],[76,.5],[74,1],[72,1],[74,1],
+    [76,1],[72,.5],[74,.5],[76,1],[72,2],
+    [0,1],
+    // —— 平安夜 ——
+    [67,1],[69,1],[67,1],[64,1.5],
+    [67,1],[69,1],[67,1],[64,1.5],
+    [74,1],[74,1],[71,1],[72,1.5],
+    [67,1],[72,1],[76,1],[74,1.5],
+    [77,1],[76,1],[74,1],[72,1],[74,1],[76,1],
+    [69,1],[67,1],[64,1],[67,2],
+    [0,1],
+    // —— 奇异恩典 · 结尾 ——
+    [72,1],[76,.5],[77,.5],[79,1],[76,.5],[74,.5],[72,1],[69,1.5],
+    [76,1],[72,.5],[74,.5],[76,1],[72,3]
+  ];
+  const bg = { ctx: null, wet: null, timer: null, playing: false, unlocked: false };
+
+  function ensureBg() {
+    if (!bg.ctx) {
+      bg.ctx = new (window.AudioContext || window.webkitAudioContext)();
+      // 共享的延时混响，让钢琴声更柔和
+      const delay = bg.ctx.createDelay(); delay.delayTime.value = 0.42;
+      const fb = bg.ctx.createGain(); fb.gain.value = 0.26;
+      const wet = bg.ctx.createGain(); wet.gain.value = 0.3;
+      delay.connect(fb); fb.connect(delay);
+      wet.connect(delay); delay.connect(bg.ctx.destination);
+      bg.wet = wet;
+    }
+    if (bg.ctx.state === "suspended") bg.ctx.resume();
+    return bg.ctx;
   }
-  function pianoNote(ctx, midi, t, dur, gain) {
+  function bgNote(ctx, midi, t, dur, gain) {
+    if (!midi) return; // 休止符
     const f = 440 * Math.pow(2, (midi - 69) / 12);
-    const o = ctx.createOscillator(), o2 = ctx.createOscillator();
-    o.type = "triangle"; o.frequency.value = f;
-    o2.type = "sine"; o2.frequency.value = f * 2;
+    const o = ctx.createOscillator(); o.type = "triangle"; o.frequency.value = f;
+    const o2 = ctx.createOscillator(); o2.type = "sine"; o2.frequency.value = f * 2;
     const g = ctx.createGain();
     g.gain.setValueAtTime(0.0001, t);
-    g.gain.linearRampToValueAtTime(gain, t + 0.02);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + dur * 0.92);
-    const o2g = ctx.createGain(); o2g.gain.value = 0.3;
-    o2.connect(o2g); o2g.connect(g); o.connect(g); g.connect(ctx.destination);
+    g.gain.linearRampToValueAtTime(gain, t + 0.06);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur * 0.95);
+    const o2g = ctx.createGain(); o2g.gain.value = 0.26;
+    o2.connect(o2g); o2g.connect(g); o.connect(g);
+    g.connect(ctx.destination);
+    if (bg.wet) g.connect(bg.wet);
     o.start(t); o2.start(t); o.stop(t + dur); o2.stop(t + dur);
   }
-  function scheduleTrack(ctx, trackIdx) {
-    const tr = MUSIC[trackIdx];
-    const beat = 60 / tr.bpm;
-    let t = ctx.currentTime + 0.08;
-    tr.notes.forEach(([midi, d]) => {
-      pianoNote(ctx, midi, t, d * beat * 1.05, audio.vol * 0.5);
-      pianoNote(ctx, midi - 12, t, d * beat * 1.2, audio.vol * 0.16); // 低八度柔伴
+  function playBgOnce() {
+    const ctx = ensureBg();
+    if (bg.playing) return;
+    // 60 秒安静体验进行中则不打扰
+    if (document.getElementById("sixty").classList.contains("open")) return;
+    bg.playing = true;
+    const bpm = 58, beat = 60 / bpm;
+    let t = ctx.currentTime + 0.25;
+    BG_NOTES.forEach(([midi, d]) => {
+      bgNote(ctx, midi, t, d * beat * 1.1, 0.32);
+      if (midi) bgNote(ctx, midi - 12, t, d * beat * 1.25, 0.1);
       t += d * beat;
     });
-    const total = t - ctx.currentTime + 0.6;
-    clearTimeout(audio.endTimer);
-    audio.endTimer = setTimeout(() => { if (audio.playing) stopMusic(); }, total * 1000);
+    const total = (t - ctx.currentTime) * 1000 + 900;
+    clearTimeout(bg.timer);
+    bg.timer = setTimeout(() => { bg.playing = false; }, total);
   }
-  function playMusic() {
-    const ctx = ensureAudio();
-    audio.playing = true;
-    musicPlay.textContent = "⏸";
-    musicNow.textContent = MUSIC[audio.track].name;
-    scheduleTrack(ctx, audio.track);
-    renderTracks();
+  function unlockBg() {
+    if (bg.unlocked) return;
+    bg.unlocked = true;
+    playBgOnce();
+    setInterval(playBgOnce, 10 * 60 * 1000); // 每 10 分钟 1 次
   }
-  function stopMusic() {
-    audio.playing = false;
-    clearTimeout(audio.endTimer);
-    musicPlay.textContent = "▶";
-    renderTracks();
-  }
-  function togglePlay() {
-    if (audio.playing) { stopMusic(); return; }
-    playMusic();
-  }
-  function renderTracks() {
-    musicTracks.innerHTML = MUSIC.map((tr, i) =>
-      `<button class="music__track" data-i="${i}">${tr.name}<span class="music__track-state">${audio.playing && i === audio.track ? "播放中" : ""}</span></button>`).join("");
-  }
-  function paintMute() { musicMute.textContent = audio.muted ? "🔇" : "🔊"; }
-  function setMuted(v) {
-    audio.muted = v;
-    audio.vol = v ? 0 : 0.6;
-    paintMute();
-  }
-  musicFab.addEventListener("click", () => {
-    const open = musicCard.hidden;
-    musicCard.hidden = !open;
-    musicFab.setAttribute("aria-expanded", open);
-    if (open) renderTracks();
-  });
-  musicCard.addEventListener("click", (e) => {
-    const close = e.target.closest("#musicClose");
-    if (close) { musicCard.hidden = true; musicFab.setAttribute("aria-expanded", "false"); }
-    const track = e.target.closest(".music__track");
-    if (track) {
-      audio.track = +track.dataset.i;
-      stopMusic(); playMusic(); renderTracks();
-    }
-  });
-  musicPlay.addEventListener("click", togglePlay);
-  musicMute.addEventListener("click", () => setMuted(!audio.muted));
-  renderTracks();
+  ["pointerdown", "touchstart", "keydown"].forEach((ev) => document.addEventListener(ev, unlockBg));
 
 })();
