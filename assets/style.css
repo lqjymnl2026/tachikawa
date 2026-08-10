@@ -513,3 +513,17 @@ details[open] .creed__toggle::after{content:"收起"}
 .contact__info small{font-size:13px;color:var(--ink-soft);line-height:1.6}
 @media (max-width:860px){.contact__grid{grid-template-columns:1fr}}
 @media (max-width:560px){.contact__info{grid-template-columns:1fr}}
+
+/* ============ 联系我们 · 重新设计 ============ */
+.contact .contact__info{grid-template-columns:repeat(3,1fr);gap:16px;margin:0 0 22px}
+.ci-card{display:flex;align-items:center;gap:16px;background:var(--card);border:1.5px solid var(--line-soft);border-radius:20px;padding:22px 24px;box-shadow:0 10px 26px -20px rgba(36,51,45,.25);transition:transform .25s var(--ease)}
+.ci-card:hover{transform:translateY(-3px)}
+.ci-emoji{font-size:34px;line-height:1;flex:none}
+.ci-body b{display:block;font-size:17px;font-weight:900;color:var(--ink)}
+.ci-body p{font-size:16px;color:var(--green-deep);font-weight:700;line-height:1.6;margin-top:4px}
+.wx-card__qr{padding:18px;display:flex;justify-content:center;background:linear-gradient(180deg,#F7F0E7,#F2E9DA)}
+.wx-card__qr img{width:200px;height:200px;object-fit:cover;border-radius:16px;border:8px solid #fff;box-shadow:0 14px 30px -14px rgba(36,51,45,.35);aspect-ratio:auto}
+.wx-card__note{padding:14px 12px 18px}
+.contact .map-embed iframe{height:320px}
+@media (max-width:860px){.contact .contact__info{grid-template-columns:1fr}}
+@media (max-width:560px){.ci-card{padding:16px 18px}.ci-body p{font-size:14.5px}}
