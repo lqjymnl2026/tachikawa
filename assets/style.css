@@ -491,3 +491,25 @@ details[open] .creed__toggle::after{content:"收起"}
 .wx-card img{width:100%;aspect-ratio:779/876;object-fit:cover;display:block}
 .wx-card__note{text-align:center;font-size:12.5px;color:var(--ink-soft);padding:12px}
 @media (max-width:860px){ .about__map{grid-template-columns:1fr} }
+
+/* ============ 首页聚会邀请 ============ */
+.invite{padding:64px 0;background:linear-gradient(180deg,var(--paper) 0%,#F4EBDD 100%)}
+.invite__inner{display:flex;align-items:center;gap:22px;flex-wrap:wrap;background:var(--card);border:1.5px solid var(--line-soft);border-radius:24px;padding:26px 30px;box-shadow:var(--shadow)}
+.invite__icon{width:64px;height:64px;border-radius:50%;background:var(--amber-soft);color:var(--amber);display:flex;align-items:center;justify-content:center;font-size:30px;flex:none}
+.invite__text{flex:1;min-width:220px}
+.invite__text b{font-size:22px;font-weight:900}
+.invite__text p{font-size:15.5px;color:var(--green-deep);font-weight:700;margin-top:6px}
+.invite__text small{display:block;font-size:13px;color:var(--ink-soft);margin-top:8px;line-height:1.8}
+.invite__actions{display:flex;gap:12px;flex-wrap:wrap}
+@media (max-width:560px){.invite__inner{padding:22px 18px}}
+
+/* ============ 联系我们 ============ */
+.contact{padding:110px 0;background:linear-gradient(180deg,#F7F0E7 0%,#F2E9DA 100%)}
+.contact__grid{display:grid;grid-template-columns:1.6fr 1fr;gap:18px;align-items:stretch}
+.contact__info{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.contact__info > div{background:var(--card);border:1.5px solid var(--line-soft);border-radius:18px;padding:20px 16px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+.contact__info span{font-size:26px}
+.contact__info b{font-size:15px;font-weight:800}
+.contact__info small{font-size:13px;color:var(--ink-soft);line-height:1.6}
+@media (max-width:860px){.contact__grid{grid-template-columns:1fr}}
+@media (max-width:560px){.contact__info{grid-template-columns:1fr}}

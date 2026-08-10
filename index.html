@@ -216,12 +216,12 @@
     </a>
     <nav class="site-nav" aria-label="主导航">
       <a href="#home" class="nav-link">首页</a>
-      <a href="#groups" class="nav-link">教会</a>
+      <a href="#creeds" class="nav-link">信仰告白</a>
+      <a href="#quiet" class="nav-link">安静时光</a>
       <a href="#explore" class="nav-link">探索</a>
-      <a href="#health" class="nav-link">生活</a>
-      <a href="#about" class="nav-link">关于</a>
+      <a href="#contact" class="nav-link">联系我们</a>
     </nav>
-    <a href="#prayer" class="btn btn--ghost btn--sm header__cta">为我们祷告</a>
+    <a href="#contact" class="btn btn--ghost btn--sm header__cta">联系我们</a>
     <button class="burger" id="burger" aria-label="打开菜单" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
@@ -229,11 +229,10 @@
 <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
   <nav class="mobile-menu__nav">
     <a href="#home" class="mm-link">首页</a>
-    <a href="#groups" class="mm-link">教会 <small>星期六聚会 · 欢迎每一个人</small></a>
+    <a href="#creeds" class="mm-link">信仰告白 <small>使徒信经 · 尼西亚信经</small></a>
+    <a href="#quiet" class="mm-link">安静时光 <small>给自己 60 秒</small></a>
     <a href="#explore" class="mm-link">探索 <small>圣经 · 耶稣 · 信仰 · 人生</small></a>
-    <a href="#health" class="mm-link">生活 <small>健康 · 家庭 · 青年 · 儿童 · 安静</small></a>
-    <a href="#about" class="mm-link">关于我们</a>
-    <a href="#prayer" class="mm-link mm-link--cta">💛 为我们祷告</a>
+    <a href="#contact" class="mm-link mm-link--cta">📮 联系我们</a>
   </nav>
   <p class="mobile-menu__verse">愿你在忙碌的城市里，找到一份安静。</p>
 </div>
@@ -263,8 +262,8 @@
       有时候，也需要一个地方，让心慢下来。
     </p>
     <div class="hero__actions reveal">
-      <a href="#groups" class="btn btn--primary">来看看我们的教会</a>
-      <a href="#about" class="btn btn--text">先认识一下我们 <span class="arr">→</span></a>
+      <a href="#contact" class="btn btn--primary">第一次来 · 联系我们</a>
+      <a href="#creeds" class="btn btn--text">我们相信什么 <span class="arr">→</span></a>
     </div>
     <ul class="hero__mini reveal">
       <li><svg class="ic"><use href="#i-user"/></svg><span>认识一个人</span></li>
@@ -272,90 +271,22 @@
       <li><svg class="ic"><use href="#i-steps"/></svg><span>一起走一段路</span></li>
     </ul>
   </div>
-  <a class="hero__scroll" href="#hour" aria-label="向下滚动"><span></span></a>
+  <a class="hero__scroll" href="#invite" aria-label="向下滚动"><span></span></a>
 </section>
 
-<!-- 02 一小时选择 -->
-<section class="hour" id="hour">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="sec-tag">一个选择</span>
-      <h2 class="sec-title">如果今天，给你一个小时<br>你会选择？</h2>
-      <p class="sec-sub">没有标准答案。选一个，看看我们会聊到什么。</p>
+<!-- 教会聚会邀请 -->
+<section class="invite" id="invite">
+  <div class="wrap invite__inner reveal">
+    <span class="invite__icon">🕊️</span>
+    <div class="invite__text">
+      <b>星期六 · 欢迎你回家</b>
+      <p>聚会时间：星期六 上午 10:20 – 下午 3:30 · 联系人：郑长老</p>
+      <small>我们是一群生活在东京的华人，来自不同地方，有不同的故事——但我们相信，耶稣基督是我们的盼望。</small>
     </div>
-    <div class="hour__grid">
-      <button class="hour-card reveal" data-hour="coffee">
-        <span class="hour-card__emoji">☕</span>
-        <span class="hour-card__label">和朋友聊聊天</span>
-        <span class="hour-card__go">→</span>
-      </button>
-      <button class="hour-card reveal" data-hour="park">
-        <span class="hour-card__emoji">🌿</span>
-        <span class="hour-card__label">去公园走走</span>
-        <span class="hour-card__go">→</span>
-      </button>
-      <button class="hour-card reveal" data-hour="book">
-        <span class="hour-card__emoji">📖</span>
-        <span class="hour-card__label">读一本书</span>
-        <span class="hour-card__go">→</span>
-      </button>
-      <button class="hour-card reveal" data-hour="quiet">
-        <span class="hour-card__emoji">🙏</span>
-        <span class="hour-card__label">安静一下</span>
-        <span class="hour-card__go">→</span>
-      </button>
-      <button class="hour-card reveal" data-hour="family">
-        <span class="hour-card__emoji">👨‍👩‍👧</span>
-        <span class="hour-card__label">陪陪家人</span>
-        <span class="hour-card__go">→</span>
-      </button>
+    <div class="invite__actions">
+      <a href="#contact" class="btn btn--primary btn--sm">联系我们</a>
+      <a href="#creeds" class="btn btn--ghost btn--sm">信仰告白</a>
     </div>
-  </div>
-</section>
-
-<!-- 03 教会 -->
-<section class="groups" id="groups">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="sec-tag">教会 · 我们的聚集</span>
-      <h2 class="sec-title">一个人来，<br>认识一群人。</h2>
-      <p class="sec-sub">我们相信，信仰不是一个人完成的。<br>我们是个小型教会，没有很多事工，只有一场真诚的聚集。</p>
-    </div>
-    <div class="groups__grid">
-      <article class="group-card reveal">
-        <div class="group-card__icon" style="--c:#E8A24C"><svg class="ic"><use href="#i-users"/></svg></div>
-        <h3>教会</h3>
-        <p>我们是个小型教会，没有很多事工，只有一场真诚的聚集。无论你是学生、上班族、留学生，还是带着孩子的家长——星期六，欢迎你回家：一起唱诗、读经、吃饭、聊天。</p>
-        <span class="group-card__meta">聚会时间：星期六 上午 10:20 – 下午 3:30</span>
-        <span class="group-card__meta">联系人：郑长老</span>
-        <a href="#quiz" class="btn btn--text">和我们聊聊 →</a>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- 04 让我们认识你 -->
-<section class="quiz" id="quiz">
-  <div class="wrap quiz__wrap">
-    <div class="quiz__intro reveal" id="quizIntro">
-      <span class="quiz__badge">⏱ 60 秒 · 5 个问题</span>
-      <h2 class="sec-title">让我们<br>认识你。</h2>
-      <p class="sec-sub">没有对错，跟着感觉选。答完这几题，我们会用最温暖的方式欢迎你。</p>
-      <button class="btn btn--primary" id="quizStart">开始 · 认识你</button>
-    </div>
-    <div class="quiz__box reveal" id="quizBox" hidden>
-      <div class="quiz__top">
-        <span class="quiz__step" id="quizStep">1 / 5</span>
-        <span class="quiz__bar"><i id="quizBar"></i></span>
-        <button class="quiz__close" id="quizClose" aria-label="退出测试">✕</button>
-      </div>
-      <h3 class="quiz__q" id="quizQ"></h3>
-      <div class="quiz__opts" id="quizOpts"></div>
-      <div class="quiz__nav">
-        <button class="btn btn--ghost" id="quizBack" hidden>← 上一步</button>
-      </div>
-    </div>
-    <div class="quiz__result reveal" id="quizResult" hidden></div>
   </div>
 </section>
 
@@ -443,192 +374,6 @@
   </div>
 </section>
 
-<!-- 08 健康 -->
-<section class="health" id="health">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="sec-tag">生活 · 健康</span>
-      <h2 class="sec-title">好好生活，<br>也是一种信仰。</h2>
-      <p class="sec-sub">身体和心灵，都值得被好好照顾。</p>
-    </div>
-    <div class="health__pillars">
-      <div class="pillar reveal"><span class="pillar__ic" style="--c:#5B6CBF"><svg class="ic"><use href="#i-moon"/></svg></span><b>睡眠</b><small>好好睡觉，是给明天的礼物</small></div>
-      <div class="pillar reveal"><span class="pillar__ic" style="--c:#D96A5B"><svg class="ic"><use href="#i-apple"/></svg></span><b>饮食</b><small>简单、天然、够吃就好</small></div>
-      <div class="pillar reveal"><span class="pillar__ic" style="--c:#2E6B5E"><svg class="ic"><use href="#i-pulse"/></svg></span><b>运动</b><small>让身体动起来，心会跟着松</small></div>
-      <div class="pillar reveal"><span class="pillar__ic" style="--c:#E8A24C"><svg class="ic"><use href="#i-sun"/></svg></span><b>阳光</b><small>每天一点光，也是营养</small></div>
-      <div class="pillar reveal"><span class="pillar__ic" style="--c:#7FAE9A"><svg class="ic"><use href="#i-cloud"/></svg></span><b>休息</b><small>停下来，不是浪费</small></div>
-      <div class="pillar reveal"><span class="pillar__ic" style="--c:#E8A08A"><svg class="ic"><use href="#i-smile"/></svg></span><b>情绪</b><small>感受它，也照顾它</small></div>
-      <div class="pillar reveal"><span class="pillar__ic" style="--c:#B9A7D6"><svg class="ic"><use href="#i-home"/></svg></span><b>家庭</b><small>和爱的人一起好好吃饭</small></div>
-    </div>
-
-    <div class="challenge reveal">
-      <div class="challenge__head">
-        <div>
-          <h3>🌱 7 天健康挑战</h3>
-          <p>每天一件小事，让这周过得不一样。</p>
-        </div>
-        <div class="challenge__prog">
-          <span class="challenge__prog-num" id="chalNum">0 / 7</span>
-          <span class="challenge__prog-bar"><i id="chalBar"></i></span>
-        </div>
-      </div>
-      <div class="challenge__days" id="chalDays">
-        <button class="day" data-day="1"><b>Day 1</b><span>早睡 30 分钟</span><small>让身体先休息</small><i class="day__check">✓</i></button>
-        <button class="day" data-day="2"><b>Day 2</b><span>喝足够的水</span><small>一杯接一杯，慢慢来</small><i class="day__check">✓</i></button>
-        <button class="day" data-day="3"><b>Day 3</b><span>走路 30 分钟</span><small>看看路边的树</small><i class="day__check">✓</i></button>
-        <button class="day" data-day="4"><b>Day 4</b><span>少一点手机</span><small>把眼睛还给世界</small><i class="day__check">✓</i></button>
-        <button class="day" data-day="5"><b>Day 5</b><span>和家人吃饭</span><small>不聊工作的一顿饭</small><i class="day__check">✓</i></button>
-        <button class="day" data-day="6"><b>Day 6</b><span>到户外走走</span><small>看看天空，呼吸一下</small><i class="day__check">✓</i></button>
-        <button class="day" data-day="7"><b>Day 7</b><span>留一段时间安静</span><small>把这一刻留给自己</small><i class="day__check">✓</i></button>
-      </div>
-      <button class="btn btn--ghost btn--sm" id="chalReset">重新开始</button>
-    </div>
-  </div>
-</section>
-
-<!-- 09 家庭 -->
-<section class="family" id="family">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="sec-tag">生活 · 家庭</span>
-      <h2 class="sec-title">在东京，<br>把家过好。</h2>
-      <p class="sec-sub">工作很重要，孩子很重要，但家庭也需要时间。</p>
-    </div>
-    <div class="family__grid">
-      <div class="fam-item reveal"><span><svg class="ic"><use href="#i-heart"/></svg></span><b>夫妻关系</b><small>先好好爱身边的人</small></div>
-      <div class="fam-item reveal"><span><svg class="ic"><use href="#i-users"/></svg></span><b>亲子关系</b><small>蹲下来，听孩子说话</small></div>
-      <div class="fam-item reveal"><span><svg class="ic"><use href="#i-candle"/></svg></span><b>家庭敬拜</b><small>在家里，也可以遇见上帝</small></div>
-      <div class="fam-item reveal"><span><svg class="ic"><use href="#i-book"/></svg></span><b>儿童教育</b><small>用温柔和真理陪伴成长</small></div>
-      <div class="fam-item reveal"><span><svg class="ic"><use href="#i-clock"/></svg></span><b>家庭时间</b><small>一起吃饭、散步、发呆</small></div>
-    </div>
-    <blockquote class="family__quote reveal">
-      <p>「信仰不是只发生在教会里，<br>也发生在餐桌旁。」</p>
-      <cite>— 東京中神教会 · 家庭生活</cite>
-    </blockquote>
-  </div>
-</section>
-
-<!-- 10 儿童 -->
-<section class="kids" id="kids">
-  <div class="wrap">
-    <div class="kids__inner">
-      <div class="kids__copy reveal">
-        <span class="sec-tag">生活 · 儿童</span>
-        <h2 class="sec-title">给孩子一个<br>认识上帝的童年。</h2>
-        <p class="sec-sub">在故事、歌声和游戏里，让孩子认识那位爱他的上帝。</p>
-        <div class="kids__tags">
-          <span>🧸 儿童故事</span><span>🎬 圣经动画</span><span>💛 亲子灵修</span><span>🎵 儿童诗歌</span><span>🏡 家庭活动</span>
-        </div>
-        <button class="btn btn--primary" id="kidsBtn">进入儿童世界</button>
-      </div>
-      <div class="kids__art reveal" aria-hidden="true">
-        <div class="kids__balloon kids__balloon--1"><svg class="ic"><use href="#i-balloon"/></svg></div>
-        <div class="kids__balloon kids__balloon--2"><svg class="ic"><use href="#i-balloon"/></svg></div>
-        <div class="kids__star kids__star--1"><svg class="ic"><use href="#i-star"/></svg></div>
-        <div class="kids__star kids__star--2"><svg class="ic"><use href="#i-star"/></svg></div>
-        <div class="kids__moon"><svg class="ic ic--lg"><use href="#i-moon"/></svg></div>
-        <div class="kids__heart"><svg class="ic"><use href="#i-heart"/></svg></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 11 青年 -->
-<section class="youth" id="youth">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="sec-tag">生活 · 青年</span>
-      <h2 class="sec-title">东京很大，<br>你不需要一个人长大。</h2>
-      <p class="sec-sub">学习、工作、恋爱、友情、信仰、未来——<br>这里有一群和你一起生活的人，不是一个「组织」。</p>
-    </div>
-    <div class="youth__topics">
-      <span class="yt reveal">学习</span><span class="yt reveal">工作</span><span class="yt reveal">恋爱</span><span class="yt reveal">友情</span><span class="yt reveal">信仰</span><span class="yt reveal">未来</span>
-    </div>
-    <div class="youth__acts">
-      <div class="act reveal"><span class="act__ic" style="--c:#E8A24C"><svg class="ic"><use href="#i-coffee"/></svg></span><b>Coffee Talk</b><small>一杯咖啡，一段真心话</small></div>
-      <div class="act reveal"><span class="act__ic" style="--c:#2E6B5E"><svg class="ic"><use href="#i-book"/></svg></span><b>Bible Night</b><small>不端着地读圣经</small></div>
-      <div class="act reveal"><span class="act__ic" style="--c:#7FAE9A"><svg class="ic"><use href="#i-mountain"/></svg></span><b>户外活动</b><small>爬山、野餐、看海</small></div>
-      <div class="act reveal"><span class="act__ic" style="--c:#8FB6D8"><svg class="ic"><use href="#i-film"/></svg></span><b>电影讨论</b><small>看完一起聊聊人生</small></div>
-      <div class="act reveal"><span class="act__ic" style="--c:#B9A7D6"><svg class="ic"><use href="#i-music"/></svg></span><b>音乐</b><small>唱一些走心的歌</small></div>
-      <div class="act reveal"><span class="act__ic" style="--c:#E8A08A"><svg class="ic"><use href="#i-users"/></svg></span><b>教会聚会</b><small>星期六 10:20 · 安息日聚会</small></div>
-    </div>
-  </div>
-</section>
-
-<!-- 12 祷告墙 -->
-<section class="prayer" id="prayer">
-  <div class="wrap prayer__inner">
-    <div class="prayer__copy reveal">
-      <span class="sec-tag">祷告墙</span>
-      <h2 class="sec-title">有什么事，<br>想让我们为你祷告？</h2>
-      <p class="sec-sub">匿名也可以。写下它，就有人放在心上。</p>
-      <form class="prayer__form" id="prayerForm">
-        <input type="text" name="name" maxlength="20" placeholder="你的称呼（可以不填）" autocomplete="off">
-        <textarea name="text" rows="3" maxlength="200" placeholder="最近工作压力很大……" required></textarea>
-        <button class="btn btn--primary" type="submit">提交 · 让心轻一点</button>
-      </form>
-      <p class="prayer__note" id="prayerNote" hidden>❤️ 谢谢你。有人正在为你祷告。</p>
-    </div>
-    <div class="prayer__wall reveal" id="prayerWall">
-      <h3 class="prayer__wall-title">弟兄姊妹的祷告</h3>
-      <div class="prayer__list" id="prayerList"></div>
-      <p class="prayer__hint">点「我也愿意祷告」，让他们知道不孤单。</p>
-    </div>
-  </div>
-</section>
-
-<!-- 13 关于 -->
-<section class="about" id="about">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="sec-tag">关于我们</span>
-      <h2 class="sec-title">我们是谁？</h2>
-    </div>
-    <div class="about__body reveal">
-      <p>我们是一群生活在东京的华人。</p>
-      <p>有人刚来到日本，有人已经生活多年；<br>有人刚开始认识圣经，有人已经跟随耶稣很多年。</p>
-      <p>我们来自不同地方，有不同的故事。</p>
-      <p class="about__addr">📍 教会地址：〒196-0022 東京都昭島市中神町3-7-34</p>
-      <p class="about__believe">但我们相信：<br><strong>耶稣基督是我们的盼望。</strong></p>
-    </div>
-    <div class="about__values">
-      <div class="value reveal"><span class="value__ic" style="--c:#E8A24C"><svg class="ic"><use href="#i-hope"/></svg></span><b>认识上帝</b></div>
-      <div class="value reveal"><span class="value__ic" style="--c:#E8A08A"><svg class="ic"><use href="#i-heart"/></svg></span><b>彼此相爱</b></div>
-      <div class="value reveal"><span class="value__ic" style="--c:#2E6B5E"><svg class="ic"><use href="#i-leaf"/></svg></span><b>健康生活</b></div>
-      <div class="value reveal"><span class="value__ic" style="--c:#7FAE9A"><svg class="ic"><use href="#i-users"/></svg></span><b>服务社区</b></div>
-      <div class="value reveal"><span class="value__ic" style="--c:#8FB6D8"><svg class="ic"><use href="#i-book"/></svg></span><b>分享福音</b></div>
-      <div class="value reveal"><span class="value__ic" style="--c:#B9A7D6"><svg class="ic"><use href="#i-sunrise"/></svg></span><b>等候基督再来</b></div>
-    </div>
-
-
-    <!-- 教会信息 + 地图导航 -->
-    <div class="about__map reveal">
-      <div class="map-card">
-        <div class="map-card__head">
-          <div class="map-card__info">
-            <b>東京中神教会</b>
-            <span>〒196-0022 東京都昭島市中神町3-7-34</span>
-          </div>
-          <a class="btn btn--primary btn--sm" href="https://www.google.com/maps/dir/?api=1&amp;destination=東京都昭島市中神町3-7-34" target="_blank" rel="noopener">🧭 打开地图导航</a>
-        </div>
-        <div class="map-embed">
-          <iframe src="https://maps.google.com/maps?q=東京都昭島市中神町3-7-34&amp;z=16&amp;hl=zh-CN&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="東京中神教会 地图" allowfullscreen></iframe>
-        </div>
-      </div>
-      <div class="wx-card">
-        <div class="wx-card__head">
-          <span class="wx-card__ic">💬</span>
-          <div><b>微信联系我们</b><span>扫码添加 · 欢迎来聊聊</span></div>
-        </div>
-        <img src="assets/wechat-qr.jpg" alt="微信二维码" loading="lazy">
-        <p class="wx-card__note">长按识别二维码 · 添加微信</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-
 <!-- 13.5 真理 · 信仰宣告 -->
 <section class="creeds" id="creeds">
   <div class="wrap">
@@ -668,22 +413,42 @@
   </div>
 </section>
 
-<!-- 14 盼望 -->
-<section class="hope" id="hope">
-  <div class="hope__sun" aria-hidden="true"></div>
-  <div class="wrap hope__inner">
-    <div class="hope__copy reveal">
-      <span class="sec-tag" style="color:rgba(255,255,255,.75)">盼望</span>
-      <h2 class="sec-title">我们相信，<br>故事还没有结束。</h2>
-      <p class="sec-sub">这个世界有痛苦、有死亡、有眼泪，<br>也有很多我们无法理解的事情。</p>
-      <p class="hope__line">但我们相信：<strong>耶稣还要再来。</strong></p>
+
+<!-- 联系我们 -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">联系我们</span>
+      <h2 class="sec-title">欢迎你来坐一坐。</h2>
+      <p class="sec-sub">地址、地图、微信——找到我们很容易。星期六，期待见到你。</p>
     </div>
-    <div class="hope__words">
-      <span class="hw reveal" style="--i:0">相信</span>
-      <span class="hw reveal" style="--i:1">相爱</span>
-      <span class="hw reveal" style="--i:2">生活</span>
-      <span class="hw reveal" style="--i:3">服务</span>
-      <span class="hw reveal" style="--i:4">盼望</span>
+    <div class="contact__grid reveal">
+      <div class="map-card">
+        <div class="map-card__head">
+          <div class="map-card__info">
+            <b>東京中神教会</b>
+            <span>〒196-0022 東京都昭島市中神町3-7-34</span>
+            <span>聚会时间：星期六 上午 10:20 – 下午 3:30 · 联系人：郑长老</span>
+          </div>
+          <a class="btn btn--primary btn--sm" href="https://www.google.com/maps/dir/?api=1&amp;destination=東京都昭島市中神町3-7-34" target="_blank" rel="noopener">🧭 打开地图导航</a>
+        </div>
+        <div class="map-embed">
+          <iframe src="https://maps.google.com/maps?q=東京都昭島市中神町3-7-34&amp;z=16&amp;hl=zh-CN&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="東京中神教会 地图" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="wx-card">
+        <div class="wx-card__head">
+          <span class="wx-card__ic">💬</span>
+          <div><b>微信联系我们</b><span>扫码添加 · 欢迎来聊聊</span></div>
+        </div>
+        <img src="assets/wechat-qr.jpg" alt="微信二维码" loading="lazy">
+        <p class="wx-card__note">长按识别二维码 · 添加微信</p>
+      </div>
+    </div>
+    <div class="contact__info reveal">
+      <div><span>🕙</span><b>聚会时间</b><small>星期六 上午 10:20 – 下午 3:30</small></div>
+      <div><span>📍</span><b>地址</b><small>〒196-0022 東京都昭島市中神町3-7-34</small></div>
+      <div><span>👤</span><b>联系人</b><small>郑长老</small></div>
     </div>
   </div>
 </section>
@@ -693,10 +458,10 @@
 <!-- 手机底部导航 -->
 <nav class="bottom-nav" id="bottomNav" aria-label="手机导航">
   <a class="bn-item" href="#home" data-sec="home"><svg class="ic"><use href="#i-logo"/></svg><span>首页</span></a>
-  <a class="bn-item" href="#groups" data-sec="groups"><svg class="ic"><use href="#i-users"/></svg><span>教会</span></a>
+  <a class="bn-item" href="#creeds" data-sec="creeds"><svg class="ic"><use href="#i-cross"/></svg><span>信仰告白</span></a>
+  <a class="bn-item" href="#quiet" data-sec="quiet"><svg class="ic"><use href="#i-quiet"/></svg><span>安静时光</span></a>
   <a class="bn-item" href="#explore" data-sec="explore"><svg class="ic"><use href="#i-compass"/></svg><span>探索</span></a>
-  <a class="bn-item" href="#health" data-sec="health"><svg class="ic"><use href="#i-leaf"/></svg><span>生活</span></a>
-  <a class="bn-item bn-item--pray" href="#prayer" data-sec="prayer"><svg class="ic"><use href="#i-heart"/></svg><span>祷告</span></a>
+  <a class="bn-item bn-item--pray" href="#contact" data-sec="contact"><svg class="ic"><use href="#i-heart"/></svg><span>联系我们</span></a>
 </nav>
 
 <!-- 页脚 -->
@@ -714,39 +479,22 @@
     </div>
     <div class="footer__cols">
       <div class="footer__col">
-        <b>教会</b>
-        <a href="#groups">教会聚会</a><a href="#quiz">让我们认识你</a><span>星期六 10:20 – 15:30</span><span>联系人：郑长老</span>
-      </div>
-      <div class="footer__col">
-        <b>探索</b>
-        <a href="#explore">圣经</a><a href="#explore">耶稣</a><a href="#explore">信仰</a><a href="#explore">人生</a>
+        <b>板块</b>
+        <a href="#home">首页</a><a href="#creeds">信仰告白</a><a href="#quiet">安静时光</a><a href="#explore">圣经探索</a><a href="#contact">联系我们</a>
       </div>
       <div class="footer__col">
         <b>真理</b>
         <a href="#creeds">信仰宣告</a><a href="#creeds">使徒信经</a><a href="#creeds">尼西亚信经</a>
       </div>
       <div class="footer__col">
-        <b>生活</b>
-        <a href="#health">健康</a><a href="#family">家庭</a><a href="#youth">青年</a><a href="#kids">儿童</a><a href="#quiet">安静时光</a>
-      </div>
-      <div class="footer__col">
-        <b>联系</b>
-        <a href="#prayer">祷告墙</a><a href="#about">关于我们</a><a href="#about">微信联系</a><span>〒196-0022 東京都昭島市中神町3-7-34</span><a href="https://www.google.com/maps/dir/?api=1&amp;destination=東京都昭島市中神町3-7-34" target="_blank" rel="noopener">🧭 地图导航</a>
+        <b>联系我们</b>
+        <span>星期六 10:20 – 15:30</span><span>联系人：郑长老</span><a href="#contact">微信联系</a><span>〒196-0022 東京都昭島市中神町3-7-34</span><a href="https://www.google.com/maps/dir/?api=1&amp;destination=東京都昭島市中神町3-7-34" target="_blank" rel="noopener">🧭 地图导航</a>
       </div>
     </div>
     <div class="footer__verse">「凡劳苦担重担的人，可以到我这里来，我就使你们得安息。」—— 马太福音 11:28</div>
     <p class="footer__copy">© 2026 東京中神教会 · 愿平安与你同在</p>
   </div>
 </footer>
-
-<!-- 一小时选择 弹窗 -->
-<div class="modal" id="hourModal" aria-hidden="true">
-  <div class="modal__backdrop" data-close="hourModal"></div>
-  <div class="modal__card" role="dialog" aria-modal="true">
-    <button class="modal__x" data-close="hourModal" aria-label="关闭">✕</button>
-    <div class="hour-result" id="hourResult"></div>
-  </div>
-</div>
 
 <!-- 探索 弹窗 -->
 <div class="modal" id="topicModal" aria-hidden="true">

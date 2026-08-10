@@ -86,64 +86,6 @@
   }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
   $$(".reveal").forEach((el) => io.observe(el));
 
-  /* ================================================================
-     02｜一小时选择
-  ================================================================ */
-  const HOURS = {
-    coffee: {
-      emoji: "☕", title: "和朋友聊聊天",
-      text: "真正的朋友，是能坐下来慢慢说话的人。在东京，这样的时间很难得，也很珍贵。我们每周都有 Coffee Talk——一杯咖啡，一段真心话。",
-      verse: "朋友乃时常亲爱，弟兄为患难而生。—— 箴言 17:17",
-      actions: [{ label: "看看 Coffee Talk", id: "youth" }, { label: "找到我们的教会", id: "groups", primary: true }]
-    },
-    park: {
-      emoji: "🌿", title: "去公园走走",
-      text: "有时候，我们需要的不是更多答案，而是停下来，看一看天空。风、树、光和一只路过的鸟，都在说话。",
-      verse: "诸天述说神的荣耀，穹苍传扬他的手段。—— 诗篇 19:1",
-      actions: [{ label: "今天出去走走", id: "health", primary: true }, { label: "加入户外活动", id: "youth" }]
-    },
-    book: {
-      emoji: "📖", title: "读一本书",
-      text: "翻开一页，世界就安静下来。读圣经也是读书——一本改变了无数人生命的书，也许也会改变你。",
-      verse: "你的话是我脚前的灯，是我路上的光。—— 诗篇 119:105",
-      actions: [{ label: "看看圣经探索", id: "explore", primary: true }, { label: "加入 Bible Night", id: "youth" }]
-    },
-    quiet: {
-      emoji: "🙏", title: "安静一下",
-      text: "在安静里，我们听见自己，也听见上帝。有时候，停下来，就是最好的前进。",
-      verse: "你们要休息，要知道我是神。—— 诗篇 46:10",
-      actions: [{ label: "给自己 60 秒", id: "__sixty", primary: true }, { label: "了解安静时光", id: "quiet" }]
-    },
-    family: {
-      emoji: "👨‍👩‍👧", title: "陪陪家人",
-      text: "有些陪伴，错过了就很难补回来。我们相信，家是信仰开始的地方。",
-      verse: "你们作父亲的，不要惹儿女的气，只要照着主的教训和警戒养育他们。—— 以弗所书 6:4",
-      actions: [{ label: "看看家庭生活", id: "family", primary: true }, { label: "7 天健康挑战", id: "health" }]
-    }
-  };
-  const hourModal = $("#hourModal"), hourResult = $("#hourResult");
-  $$(".hour-card").forEach((card) => {
-    card.addEventListener("click", () => {
-      const h = HOURS[card.dataset.hour];
-      if (!h) return;
-      hourResult.innerHTML = `
-        <div class="hour-result__emoji">${h.emoji}</div>
-        <h3>${h.title}</h3>
-        <p class="hr-text">${h.text}</p>
-        <div class="hr-verse">${h.verse}</div>
-        <div class="hr-actions">${h.actions.map((a) =>
-          `<button class="btn ${a.primary ? "btn--primary" : "btn--ghost"}" data-go="${a.id}">${a.label}</button>`).join("")}</div>`;
-      openModal(hourModal);
-    });
-  });
-  hourResult.addEventListener("click", (e) => {
-    const b = e.target.closest("[data-go]");
-    if (!b) return;
-    closeModal(hourModal);
-    if (b.dataset.go === "__sixty") startSixty();
-    else scrollTo(b.dataset.go);
-  });
-
   /* ---------- 弹窗通用 ---------- */
   function openModal(m) { m.classList.add("open"); m.setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden"; }
   function closeModal(m) { m.classList.remove("open"); m.setAttribute("aria-hidden", "true"); if (!$(".modal.open") && !$("#sixty").classList.contains("open")) document.body.style.overflow = ""; }
@@ -152,78 +94,6 @@
   });
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") { $$(".modal.open").forEach(closeModal); if (sixtyOpen) stopSixty(); }
-  });
-
-  /* ================================================================
-     04｜让我们认识你
-  ================================================================ */
-  const QUIZ = [
-    { q: "你现在的状态？", opts: ["学生", "工作", "家庭", "正在寻找方向"], score: { 学生: { student: 2, youth: 1 }, 工作: { work: 2 }, 家庭: { family: 3 }, 正在寻找方向: { student: 1, work: 1 } } },
-    { q: "你更喜欢？", opts: ["聊天", "读圣经", "户外", "一起吃饭"], score: { 聊天: { youth: 2 }, 读圣经: { work: 1, youth: 1 }, 户外: { youth: 2, student: 1 }, 一起吃饭: { student: 2, youth: 1 } } },
-    { q: "你来到教会是因为？", opts: ["想认识耶稣", "想认识朋友", "想寻找人生方向", "想让家庭更好"], score: { 想认识耶稣: { work: 1, youth: 1 }, 想认识朋友: { youth: 2, student: 1 }, 想寻找人生方向: { student: 1, work: 1 }, 想让家庭更好: { family: 3 } } },
-    { q: "你希望多久参加一次？", opts: ["每周一次", "偶尔", "先试试看", "有空就来"], score: { 每周一次: { youth: 1 }, 偶尔: { work: 1 }, 先试试看: { student: 1 }, 有空就来: { youth: 1 } } },
-    { q: "你希望收获什么？", opts: ["一群朋友", "人生的意义", "心里的安稳", "更好的自己"], score: { 一群朋友: { youth: 2 }, 人生的意义: { work: 2 }, 心里的安稳: { family: 1, student: 1 }, 更好的自己: { youth: 1, work: 1 } } }
-  ];
-  const RESULT = {
-    group: {
-      name: "教会", time: "星期六 上午 10:20 – 下午 3:30", icon: "i-users",
-      cta: "第一次参加"
-    }
-  };
-  const greet = (ans) => {
-    const q2 = ans[1] || "";
-    if (q2 === "聊天") return "你喜欢和人聊天——教会里永远有一杯咖啡，和一个愿意听的人。";
-    if (q2 === "读圣经") return "你想认真地读圣经——没关系，我们陪你从第一页慢慢读起。";
-    if (q2 === "户外") return "你喜欢户外——周末一起爬爬山、散散步、看看天空。";
-    if (q2 === "一起吃饭") return "你喜欢一起吃饭——每周五的晚餐，给你留了位子。";
-    return "无论你现在在哪里，都欢迎你来坐一坐。";
-  };
-  const quizIntro = $("#quizIntro"), quizBox = $("#quizBox"), quizResult = $("#quizResult");
-  const qQ = $("#quizQ"), qOpts = $("#quizOpts"), qStep = $("#quizStep"), qBar = $("#quizBar"), qBack = $("#quizBack");
-  let qIdx = 0, qAns = [];
-  const startQuiz = () => {
-    qIdx = 0; qAns = [];
-    quizIntro.hidden = true; quizResult.hidden = true; quizBox.hidden = false;
-    quizBox.classList.add("in");
-    renderQ();
-    scrollTo("quiz");
-  };
-  const renderQ = () => {
-    const item = QUIZ[qIdx];
-    qStep.textContent = `${qIdx + 1} / ${QUIZ.length}`;
-    qBar.style.width = `${((qIdx) / QUIZ.length) * 100}%`;
-    qQ.textContent = item.q;
-    qBack.hidden = qIdx === 0;
-    qOpts.innerHTML = item.opts.map((o) => `<button class="quiz__opt">${o}</button>`).join("");
-    $$(".quiz__opt", qOpts).forEach((b) => {
-      b.addEventListener("click", () => {
-        $$(".quiz__opt", qOpts).forEach((x) => x.classList.remove("sel"));
-        b.classList.add("sel");
-        setTimeout(() => { qAns[qIdx] = b.textContent; qIdx++; if (qIdx < QUIZ.length) renderQ(); else showResult(); }, 260);
-      });
-    });
-  };
-  qBack.addEventListener("click", () => { if (qIdx > 0) { qIdx--; renderQ(); } });
-  $("#quizStart").addEventListener("click", startQuiz);
-  $("#quizClose").addEventListener("click", () => { quizBox.hidden = true; quizIntro.hidden = false; });
-  const showResult = () => {
-    const r = RESULT.group;
-    const note = greet(qAns);
-    quizBox.hidden = true; quizResult.hidden = false;
-    quizResult.innerHTML = `
-      <span class="qr-badge">我们觉得你会喜欢</span>
-      <h3>${r.name}</h3>
-      <span class="qr-time"><svg class="ic ic--xs"><use href="#i-clock"/></svg> ${r.time}</span>
-      <p>${note} 我们是个小型教会，每个星期六都会聚在一起——没有很多事工，只有像家一样的相聚，每一个人都被看见。</p>
-      <button class="btn btn--primary" data-go="prayer">${r.cta} →</button>
-      <button class="btn btn--ghost" data-go="groups">看看教会</button>`;
-    qBar.style.width = "100%";
-    quizResult.classList.add("in");
-    scrollTo("quiz");
-  };
-  quizResult.addEventListener("click", (e) => {
-    const b = e.target.closest("[data-go]");
-    if (b) scrollTo(b.dataset.go);
   });
 
   /* ================================================================
@@ -257,7 +127,7 @@
         <div class="sixty__verse">${s.verse}</div>
         <div class="sixty__actions">
           <button class="btn btn--primary" data-go="again">再来一次</button>
-          <button class="btn btn--ghost" data-go="verse">今日经文 →</button>
+          <button class="btn btn--ghost" data-go="verse">看信仰告白 →</button>
         </div>`;
     }
     if (s.title && s.cls !== "end") html += `<div class="sixty__title">${s.title}</div>`;
@@ -282,7 +152,6 @@
     sixtyTimers.push(setInterval(tick, 500));
   };
   function startSixty() {
-    closeModal(hourModal);
     sixtyOpen = true;
     sixty.classList.add("open");
     sixty.setAttribute("aria-hidden", "false");
@@ -302,7 +171,7 @@
     const b = e.target.closest("[data-go]");
     if (!b) return;
     if (b.dataset.go === "again") { stopSixty(false); startSixty(); }
-    else { stopSixty(); scrollTo("explore"); }
+    else { stopSixty(); scrollTo("creeds"); }
   });
   $("#quietStart").addEventListener("click", startSixty);
 
@@ -359,8 +228,8 @@
         <p>${t.body}</p>
         <div class="topic__ask"><b>💬 讨论时间</b>${t.ask}</div>
         <div class="topic__actions">
-          <button class="btn btn--primary" data-go="prayer">和我聊聊</button>
-          <button class="btn btn--ghost" data-go="groups">看看教会</button>
+          <button class="btn btn--primary" data-go="contact">微信联系我们</button>
+          <button class="btn btn--ghost" data-go="contact">看看联系方式</button>
         </div>`;
       openModal(topicModal);
     });
@@ -384,88 +253,5 @@
     });
   });
 
-  /* ---------- 儿童世界 ---------- */
-  $("#kidsBtn").addEventListener("click", () => {
-    topicBody.innerHTML = `
-      <span class="topic__tag">生活 · 儿童</span>
-      <h3>欢迎来到儿童世界 👋</h3>
-      <div class="topic__verse">教养孩童，使他走当行的道，就是到老他也不偏离。—— 箴言 22:6</div>
-      <p>在中神，我们有给孩子的故事时间、圣经动画、亲子灵修和家庭活动。孩子们在这里被爱、被听见，也在歌声和故事里认识那位爱他们的上帝。</p>
-      <div class="topic__ask"><b>💛 给爸爸妈妈</b>欢迎带孩子一起来！第一次来也没关系，我们慢慢来。</div>
-      <div class="topic__actions">
-        <button class="btn btn--primary" data-go="prayer">带孩子来聊聊</button>
-        <button class="btn btn--ghost" data-go="family">看看家庭生活</button>
-      </div>`;
-    openModal(topicModal);
-  });
 
-  /* ================================================================
-     08｜健康挑战
-  ================================================================ */
-  const chalKey = "tcc_challenge_v1";
-  let chalDone = store.get(chalKey, []);
-  const chalNum = $("#chalNum"), chalBar = $("#chalBar");
-  const paintChal = () => {
-    $$("#chalDays .day").forEach((d) => d.classList.toggle("done", chalDone.includes(d.dataset.day)));
-    chalNum.textContent = `${chalDone.length} / 7`;
-    chalBar.style.width = `${(chalDone.length / 7) * 100}%`;
-    store.set(chalKey, chalDone);
-  };
-  $$("#chalDays .day").forEach((d) => {
-    d.addEventListener("click", () => {
-      const k = d.dataset.day;
-      chalDone = chalDone.includes(k) ? chalDone.filter((x) => x !== k) : [...chalDone, k];
-      paintChal();
-    });
-  });
-  $("#chalReset").addEventListener("click", () => { chalDone = []; paintChal(); });
-  paintChal();
-
-  /* ================================================================
-     12｜祷告墙
-  ================================================================ */
-  const prayKey = "tcc_prayers_v1";
-  const seeds = [
-    { name: "匿名", text: "最近工作压力很大，晚上总是睡不着。", count: 3, date: "3 小时前" },
-    { name: "一位妈妈", text: "为孩子的高中考试祷告，希望他能平安顺利。", count: 5, date: "昨天" },
-    { name: "小林", text: "刚来东京三个月，有点孤单，求主给我勇气去认识新朋友。", count: 2, date: "2 天前" }
-  ];
-  let prayers = store.get(prayKey, seeds);
-  const prayerList = $("#prayerList");
-  const paintPrayers = () => {
-    prayerList.innerHTML = prayers.map((p, i) => `
-      <div class="prayer-item">
-        <div class="prayer-item__top">
-          <span class="prayer-item__name">${p.name || "匿名"}</span>
-          <span class="prayer-item__date">${p.date || "刚刚"}</span>
-        </div>
-        <p class="prayer-item__text">${esc(p.text)}</p>
-        <div class="prayer-item__foot">
-          <span class="prayer-item__praying">❤️ ${p.count} 人愿意为你祷告</span>
-          <button class="prayer-item__btn" data-i="${i}">我也愿意祷告</button>
-        </div>
-      </div>`).join("");
-    store.set(prayKey, prayers);
-  };
-  prayerList.addEventListener("click", (e) => {
-    const b = e.target.closest(".prayer-item__btn");
-    if (!b) return;
-    prayers[+b.dataset.i].count += 1;
-    paintPrayers();
-    b.textContent = "❤️ 已记在心上";
-    b.style.pointerEvents = "none";
-  });
-  $("#prayerForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const f = e.target;
-    const text = f.text.value.trim();
-    if (!text) return;
-    prayers.unshift({ name: f.name.value.trim() || "匿名", text, count: 1, date: "刚刚" });
-    f.reset();
-    paintPrayers();
-    const note = $("#prayerNote");
-    note.hidden = false;
-    setTimeout(() => { note.hidden = true; }, 4200);
-  });
-  paintPrayers();
 })();
