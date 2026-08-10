@@ -238,11 +238,13 @@
     musicPlay.textContent = "⏸";
     musicNow.textContent = MUSIC[audio.track].name;
     scheduleTrack(ctx, audio.track);
+    renderTracks();
   }
   function stopMusic() {
     audio.playing = false;
     clearTimeout(audio.endTimer);
     musicPlay.textContent = "▶";
+    renderTracks();
   }
   function togglePlay() {
     if (audio.playing) { stopMusic(); return; }
@@ -250,7 +252,7 @@
   }
   function renderTracks() {
     musicTracks.innerHTML = MUSIC.map((tr, i) =>
-      `<button class="music__track" data-i="${i}">${tr.name}<span class="music__track-state">${i === audio.track ? "播放中" : ""}</span></button>`).join("");
+      `<button class="music__track" data-i="${i}">${tr.name}<span class="music__track-state">${audio.playing && i === audio.track ? "播放中" : ""}</span></button>`).join("");
   }
   function paintMute() { musicMute.textContent = audio.muted ? "🔇" : "🔊"; }
   function setMuted(v) {
