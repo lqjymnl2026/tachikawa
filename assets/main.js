@@ -94,7 +94,7 @@
       emoji: "☕", title: "和朋友聊聊天",
       text: "真正的朋友，是能坐下来慢慢说话的人。在东京，这样的时间很难得，也很珍贵。我们每周都有 Coffee Talk——一杯咖啡，一段真心话。",
       verse: "朋友乃时常亲爱，弟兄为患难而生。—— 箴言 17:17",
-      actions: [{ label: "看看 Coffee Talk", id: "youth" }, { label: "找到我的小组", id: "groups", primary: true }]
+      actions: [{ label: "看看 Coffee Talk", id: "youth" }, { label: "找到我们的教会", id: "groups", primary: true }]
     },
     park: {
       emoji: "🌿", title: "去公园走走",
@@ -155,7 +155,7 @@
   });
 
   /* ================================================================
-     04｜小组测验
+     04｜让我们认识你
   ================================================================ */
   const QUIZ = [
     { q: "你现在的状态？", opts: ["学生", "工作", "家庭", "正在寻找方向"], score: { 学生: { student: 2, youth: 1 }, 工作: { work: 2 }, 家庭: { family: 3 }, 正在寻找方向: { student: 1, work: 1 } } },
@@ -166,13 +166,13 @@
   ];
   const RESULT = {
     group: {
-      name: "教会小组", time: "每周五 · 一起吃饭、聊天、读圣经", icon: "i-users",
+      name: "教会", time: "星期六 上午 10:20 – 下午 3:30", icon: "i-users",
       cta: "第一次参加"
     }
   };
   const greet = (ans) => {
     const q2 = ans[1] || "";
-    if (q2 === "聊天") return "你喜欢和人聊天——小组里永远有一杯咖啡，和一个愿意听的人。";
+    if (q2 === "聊天") return "你喜欢和人聊天——教会里永远有一杯咖啡，和一个愿意听的人。";
     if (q2 === "读圣经") return "你想认真地读圣经——没关系，我们陪你从第一页慢慢读起。";
     if (q2 === "户外") return "你喜欢户外——周末一起爬爬山、散散步、看看天空。";
     if (q2 === "一起吃饭") return "你喜欢一起吃饭——每周五的晚餐，给你留了位子。";
@@ -214,9 +214,9 @@
       <span class="qr-badge">我们觉得你会喜欢</span>
       <h3>${r.name}</h3>
       <span class="qr-time"><svg class="ic ic--xs"><use href="#i-clock"/></svg> ${r.time}</span>
-      <p>${note} 我们是个小型教会，只有一个小组——但也因此更像个家：每一个人都被看见。</p>
+      <p>${note} 我们是个小型教会，每个星期六都会聚在一起——没有很多事工，只有像家一样的相聚，每一个人都被看见。</p>
       <button class="btn btn--primary" data-go="prayer">${r.cta} →</button>
-      <button class="btn btn--ghost" data-go="groups">看看小组</button>`;
+      <button class="btn btn--ghost" data-go="groups">看看教会</button>`;
     qBar.style.width = "100%";
     quizResult.classList.add("in");
     scrollTo("quiz");
@@ -360,7 +360,7 @@
         <div class="topic__ask"><b>💬 讨论时间</b>${t.ask}</div>
         <div class="topic__actions">
           <button class="btn btn--primary" data-go="prayer">和我聊聊</button>
-          <button class="btn btn--ghost" data-go="groups">看看小组</button>
+          <button class="btn btn--ghost" data-go="groups">看看教会</button>
         </div>`;
       openModal(topicModal);
     });
