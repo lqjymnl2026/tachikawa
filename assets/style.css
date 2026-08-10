@@ -527,3 +527,17 @@ details[open] .creed__toggle::after{content:"收起"}
 .contact .map-embed iframe{height:320px}
 @media (max-width:860px){.contact .contact__info{grid-template-columns:1fr}}
 @media (max-width:560px){.ci-card{padding:16px 18px}.ci-body p{font-size:14.5px}}
+
+/* ============ 联系我们 · 统一信息卡 ============ */
+.contact__panel{display:flex;gap:26px;align-items:stretch;background:var(--card);border:1.5px solid var(--line-soft);border-radius:24px;padding:30px 32px;box-shadow:var(--shadow);margin-bottom:18px}
+.cp-rows{flex:1;display:flex;flex-direction:column;justify-content:center;gap:20px}
+.cp-row{display:flex;align-items:center;gap:16px}
+.cp-row > span{font-size:32px;line-height:1;flex:none}
+.cp-row b{font-size:17px;font-weight:900;display:block;color:var(--ink)}
+.cp-row p{font-size:16px;font-weight:700;color:var(--green-deep);margin-top:4px;line-height:1.6}
+.cp-qr{flex:none;width:232px;background:linear-gradient(180deg,#F7F0E7,#F2E9DA);border-radius:18px;padding:20px 18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
+.cp-qr b{font-size:15px;font-weight:900}
+.cp-qr img{width:168px;height:168px;object-fit:cover;border-radius:12px;border:8px solid #fff;box-shadow:0 14px 28px -14px rgba(36,51,45,.35);aspect-ratio:auto}
+.cp-qr span{font-size:12px;color:var(--ink-soft)}
+.contact .map-embed iframe{height:320px}
+@media (max-width:860px){.contact__panel{flex-direction:column;padding:24px 20px}.cp-qr{width:100%;flex-direction:column}.cp-qr img{width:200px;height:200px}}
