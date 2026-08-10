@@ -118,7 +118,7 @@
       emoji: "👨‍👩‍👧", title: "陪陪家人",
       text: "有些陪伴，错过了就很难补回来。我们相信，家是信仰开始的地方。",
       verse: "你们作父亲的，不要惹儿女的气，只要照着主的教训和警戒养育他们。—— 以弗所书 6:4",
-      actions: [{ label: "看看家庭小组", id: "family", primary: true }, { label: "7 天健康挑战", id: "health" }]
+      actions: [{ label: "看看家庭生活", id: "family", primary: true }, { label: "7 天健康挑战", id: "health" }]
     }
   };
   const hourModal = $("#hourModal"), hourResult = $("#hourResult");
@@ -165,26 +165,18 @@
     { q: "你希望收获什么？", opts: ["一群朋友", "人生的意义", "心里的安稳", "更好的自己"], score: { 一群朋友: { youth: 2 }, 人生的意义: { work: 2 }, 心里的安稳: { family: 1, student: 1 }, 更好的自己: { youth: 1, work: 1 } } }
   ];
   const RESULT = {
-    youth: {
-      name: "中神青年小组", time: "每周五 · 一起吃饭、聊天、读圣经", icon: "i-coffee",
-      desc: "看起来你很在意真实的联结——有人能说话、能一起吃饭、能一起成长。青年小组就是这样一个小而暖的地方：没有压力，做你自己就好。",
-      cta: "第一次参加"
-    },
-    work: {
-      name: "中神职场小组", time: "每月两次 · 周六上午", icon: "i-briefcase",
-      desc: "你正在认真生活，也在认真寻找意义。职场小组聚集了一群同样在工作与信仰之间探索的人：聊聊压力、方向，也一起读圣经。",
-      cta: "第一次参加"
-    },
-    family: {
-      name: "中神家庭小组", time: "每月一次 · 家庭聚餐", icon: "i-home",
-      desc: "你把家放在心上。家庭小组是给夫妻和父母的地方：一起学习怎么爱、怎么教、怎么在忙碌里守住家。欢迎带孩子一起来。",
-      cta: "第一次参加"
-    },
-    student: {
-      name: "中神留学生小组", time: "每周六 · 中文 + 日语欢迎", icon: "i-globe",
-      desc: "刚来到东京，或者正在找方向——不用一个人扛。留学生小组里有同样在适应新生活的人，也有已经走过这段路的人。",
+    group: {
+      name: "教会小组", time: "每周五 · 一起吃饭、聊天、读圣经", icon: "i-users",
       cta: "第一次参加"
     }
+  };
+  const greet = (ans) => {
+    const q2 = ans[1] || "";
+    if (q2 === "聊天") return "你喜欢和人聊天——小组里永远有一杯咖啡，和一个愿意听的人。";
+    if (q2 === "读圣经") return "你想认真地读圣经——没关系，我们陪你从第一页慢慢读起。";
+    if (q2 === "户外") return "你喜欢户外——周末一起爬爬山、散散步、看看天空。";
+    if (q2 === "一起吃饭") return "你喜欢一起吃饭——每周五的晚餐，给你留了位子。";
+    return "无论你现在在哪里，都欢迎你来坐一坐。";
   };
   const quizIntro = $("#quizIntro"), quizBox = $("#quizBox"), quizResult = $("#quizResult");
   const qQ = $("#quizQ"), qOpts = $("#quizOpts"), qStep = $("#quizStep"), qBar = $("#quizBar"), qBack = $("#quizBack");
@@ -215,21 +207,16 @@
   $("#quizStart").addEventListener("click", startQuiz);
   $("#quizClose").addEventListener("click", () => { quizBox.hidden = true; quizIntro.hidden = false; });
   const showResult = () => {
-    const scores = { youth: 0, work: 0, family: 0, student: 0 };
-    qAns.forEach((a, i) => {
-      const sc = QUIZ[i].score[a];
-      if (sc) Object.entries(sc).forEach(([k, v]) => { scores[k] += v; });
-    });
-    const top = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
-    const r = RESULT[top];
+    const r = RESULT.group;
+    const note = greet(qAns);
     quizBox.hidden = true; quizResult.hidden = false;
     quizResult.innerHTML = `
-      <span class="qr-badge">我们觉得你可能会喜欢</span>
+      <span class="qr-badge">我们觉得你会喜欢</span>
       <h3>${r.name}</h3>
-      <span class="qr-time"><svg class="ic ic--xs"><use href="assets/icons.svg#i-clock"/></svg> ${r.time}</span>
-      <p>${r.desc}</p>
+      <span class="qr-time"><svg class="ic ic--xs"><use href="#i-clock"/></svg> ${r.time}</span>
+      <p>${note} 我们是个小型教会，只有一个小组——但也因此更像个家：每一个人都被看见。</p>
       <button class="btn btn--primary" data-go="prayer">${r.cta} →</button>
-      <button class="btn btn--ghost" data-go="groups">再看看其他小组</button>`;
+      <button class="btn btn--ghost" data-go="groups">看看小组</button>`;
     qBar.style.width = "100%";
     quizResult.classList.add("in");
     scrollTo("quiz");
@@ -258,11 +245,11 @@
     let html = "";
     if (s.dur) html += `<div class="sixty__count">${s.dur ? Math.max(1, Math.ceil(s.dur - countdown)) + "s" : ""}</div>`;
     if (s.cls === "orb") {
-      html += `<div class="sixty__orb pulse"><svg class="ic"><use href="assets/icons.svg#i-leaf"/></svg></div>`;
+      html += `<div class="sixty__orb pulse"><svg class="ic"><use href="#i-leaf"/></svg></div>`;
     } else if (s.cls === "quiet") {
-      html += `<div class="sixty__orb"><svg class="ic"><use href="assets/icons.svg#i-moon"/></svg></div>`;
+      html += `<div class="sixty__orb"><svg class="ic"><use href="#i-moon"/></svg></div>`;
     } else if (s.cls === "think") {
-      html += `<div class="sixty__orb"><svg class="ic"><use href="assets/icons.svg#i-sparkle"/></svg></div>`;
+      html += `<div class="sixty__orb"><svg class="ic"><use href="#i-sparkle"/></svg></div>`;
     } else if (s.cls === "input") {
       html += `<input class="sixty__input" maxlength="80" placeholder="${s.placeholder || ""}" autocomplete="off">`;
     } else if (s.cls === "end") {
@@ -407,7 +394,7 @@
       <div class="topic__ask"><b>💛 给爸爸妈妈</b>欢迎带孩子一起来！第一次来也没关系，我们慢慢来。</div>
       <div class="topic__actions">
         <button class="btn btn--primary" data-go="prayer">带孩子来聊聊</button>
-        <button class="btn btn--ghost" data-go="family">看看家庭小组</button>
+        <button class="btn btn--ghost" data-go="family">看看家庭生活</button>
       </div>`;
     openModal(topicModal);
   });
