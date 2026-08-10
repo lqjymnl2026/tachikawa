@@ -152,6 +152,7 @@
     sixtyTimers.push(setInterval(tick, 500));
   };
   function startSixty() {
+    if (audio.playing) stopMusic();
     sixtyOpen = true;
     sixty.classList.add("open");
     sixty.setAttribute("aria-hidden", "false");
@@ -174,5 +175,106 @@
     else { stopSixty(); scrollTo("creeds"); }
   });
   $("#quietStart").addEventListener("click", startSixty);
+
+
+  /* ================================================================
+     赞美诗轻音乐播放器（WebAudio 合成）
+  ================================================================ */
+  const MUSIC = [
+    { name: "奇异恩典", bpm: 80, notes: [
+      [72,1],[76,.5],[77,.5],[79,1],[76,.5],[74,.5],[72,1],[69,1.5],
+      [72,1],[76,.5],[77,.5],[79,1],[76,1],[74,1],[72,1.5],
+      [72,1],[76,.5],[77,.5],[79,1],[81,1],[79,1],[77,.5],[76,.5],[74,1],[72,1],[74,1],
+      [76,1],[72,.5],[74,.5],[76,1],[72,2]
+    ] },
+    { name: "平安夜", bpm: 78, notes: [
+      [67,1],[69,1],[67,1],[64,1.5],
+      [67,1],[69,1],[67,1],[64,1.5],
+      [74,1],[74,1],[71,1],[72,1.5],
+      [67,1],[72,1],[76,1],[74,1.5],
+      [77,1],[76,1],[74,1],[72,1],[74,1],[76,1],
+      [69,1],[67,1],[64,1],[67,2]
+    ] }
+  ];
+  const musicEl = $("#music"), musicCard = $("#musicCard"), musicFab = $("#musicFab");
+  const musicPlay = $("#musicPlay"), musicNow = $("#musicNow"), musicMute = $("#musicMute");
+  const musicTracks = $("#musicTracks");
+  const audio = { ctx: null, playing: false, track: 0, vol: 0.6, endTimer: null, muted: false };
+
+  function ensureAudio() {
+    if (!audio.ctx) audio.ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audio.ctx.state === "suspended") audio.ctx.resume();
+    return audio.ctx;
+  }
+  function pianoNote(ctx, midi, t, dur, gain) {
+    const f = 440 * Math.pow(2, (midi - 69) / 12);
+    const o = ctx.createOscillator(), o2 = ctx.createOscillator();
+    o.type = "triangle"; o.frequency.value = f;
+    o2.type = "sine"; o2.frequency.value = f * 2;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.linearRampToValueAtTime(gain, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur * 0.92);
+    const o2g = ctx.createGain(); o2g.gain.value = 0.3;
+    o2.connect(o2g); o2g.connect(g); o.connect(g); g.connect(ctx.destination);
+    o.start(t); o2.start(t); o.stop(t + dur); o2.stop(t + dur);
+  }
+  function scheduleTrack(ctx, trackIdx) {
+    const tr = MUSIC[trackIdx];
+    const beat = 60 / tr.bpm;
+    let t = ctx.currentTime + 0.08;
+    tr.notes.forEach(([midi, d]) => {
+      pianoNote(ctx, midi, t, d * beat * 1.05, audio.vol * 0.5);
+      pianoNote(ctx, midi - 12, t, d * beat * 1.2, audio.vol * 0.16); // 低八度柔伴
+      t += d * beat;
+    });
+    const total = t - ctx.currentTime + 0.6;
+    clearTimeout(audio.endTimer);
+    audio.endTimer = setTimeout(() => { if (audio.playing) stopMusic(); }, total * 1000);
+  }
+  function playMusic() {
+    const ctx = ensureAudio();
+    audio.playing = true;
+    musicPlay.textContent = "⏸";
+    musicNow.textContent = MUSIC[audio.track].name;
+    scheduleTrack(ctx, audio.track);
+  }
+  function stopMusic() {
+    audio.playing = false;
+    clearTimeout(audio.endTimer);
+    musicPlay.textContent = "▶";
+  }
+  function togglePlay() {
+    if (audio.playing) { stopMusic(); return; }
+    playMusic();
+  }
+  function renderTracks() {
+    musicTracks.innerHTML = MUSIC.map((tr, i) =>
+      `<button class="music__track" data-i="${i}">${tr.name}<span class="music__track-state">${i === audio.track ? "播放中" : ""}</span></button>`).join("");
+  }
+  function paintMute() { musicMute.textContent = audio.muted ? "🔇" : "🔊"; }
+  function setMuted(v) {
+    audio.muted = v;
+    audio.vol = v ? 0 : 0.6;
+    paintMute();
+  }
+  musicFab.addEventListener("click", () => {
+    const open = musicCard.hidden;
+    musicCard.hidden = !open;
+    musicFab.setAttribute("aria-expanded", open);
+    if (open) renderTracks();
+  });
+  musicCard.addEventListener("click", (e) => {
+    const close = e.target.closest("#musicClose");
+    if (close) { musicCard.hidden = true; musicFab.setAttribute("aria-expanded", "false"); }
+    const track = e.target.closest(".music__track");
+    if (track) {
+      audio.track = +track.dataset.i;
+      stopMusic(); playMusic(); renderTracks();
+    }
+  });
+  musicPlay.addEventListener("click", togglePlay);
+  musicMute.addEventListener("click", () => setMuted(!audio.muted));
+  renderTracks();
 
 })();
