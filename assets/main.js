@@ -177,8 +177,9 @@
 
 
 
+
   /* ================================================================
-     背景赞美诗轻音乐：首次交互后播放，之后每 10 分钟 1 次
+     背景赞美诗轻音乐：升级版钢琴音色 · 每 10 分钟 1 次
   ================================================================ */
   const BG_NOTES = [
     // —— 奇异恩典 ——
@@ -203,51 +204,74 @@
     [72,1],[76,.5],[77,.5],[79,1],[76,.5],[74,.5],[72,1],[69,1.5],
     [76,1],[72,.5],[74,.5],[76,1],[72,3]
   ];
-  const bg = { ctx: null, wet: null, timer: null, playing: false, unlocked: false };
+  const bg = { ctx: null, d1: null, d2: null, timer: null, playing: false, unlocked: false };
 
   function ensureBg() {
     if (!bg.ctx) {
-      bg.ctx = new (window.AudioContext || window.webkitAudioContext)();
-      // 共享的延时混响，让钢琴声更柔和
-      const delay = bg.ctx.createDelay(); delay.delayTime.value = 0.42;
-      const fb = bg.ctx.createGain(); fb.gain.value = 0.26;
-      const wet = bg.ctx.createGain(); wet.gain.value = 0.3;
-      delay.connect(fb); fb.connect(delay);
-      wet.connect(delay); delay.connect(bg.ctx.destination);
-      bg.wet = wet;
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      bg.ctx = ctx;
+      // 双延时混响（更绵长温暖）
+      const d1 = ctx.createDelay(1); d1.delayTime.value = 0.3;
+      const d2 = ctx.createDelay(1); d2.delayTime.value = 0.52;
+      const fb = ctx.createGain(); fb.gain.value = 0.34;
+      const rlp = ctx.createBiquadFilter(); rlp.type = "lowpass"; rlp.frequency.value = 1900; rlp.Q.value = 0.4;
+      d1.connect(rlp); d2.connect(rlp); rlp.connect(fb); fb.connect(d1); fb.connect(d2);
+      rlp.connect(ctx.destination);
+      bg.d1 = d1; bg.d2 = d2;
     }
     if (bg.ctx.state === "suspended") bg.ctx.resume();
     return bg.ctx;
   }
-  function bgNote(ctx, midi, t, dur, gain) {
-    if (!midi) return; // 休止符
+  // 钢琴音色：多泛音 + 逐音低通 + 柔和力度包络
+  function piano(ctx, midi, t, dur, vel) {
+    if (!midi) return;
     const f = 440 * Math.pow(2, (midi - 69) / 12);
-    const o = ctx.createOscillator(); o.type = "triangle"; o.frequency.value = f;
-    const o2 = ctx.createOscillator(); o2.type = "sine"; o2.frequency.value = f * 2;
     const g = ctx.createGain();
     g.gain.setValueAtTime(0.0001, t);
-    g.gain.linearRampToValueAtTime(gain, t + 0.06);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + dur * 0.95);
-    const o2g = ctx.createGain(); o2g.gain.value = 0.26;
-    o2.connect(o2g); o2g.connect(g); o.connect(g);
+    g.gain.linearRampToValueAtTime(vel, t + 0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur * 0.8);
+    const p = ctx.createBiquadFilter(); p.type = "lowpass"; p.frequency.value = Math.min(7500, f * 5); p.Q.value = 0.35;
+    [[1, 1], [2, 0.32], [3, 0.14], [4, 0.05]].forEach(([h, amp]) => {
+      const o = ctx.createOscillator(); o.type = "sine"; o.frequency.value = f * h;
+      const og = ctx.createGain(); og.gain.value = amp;
+      o.connect(og); og.connect(p); o.start(t); o.stop(t + dur * 0.85);
+    });
+    p.connect(g);
     g.connect(ctx.destination);
-    if (bg.wet) g.connect(bg.wet);
-    o.start(t); o2.start(t); o.stop(t + dur); o2.stop(t + dur);
+    if (bg.d1) { const s = ctx.createGain(); s.gain.value = 0.42; g.connect(s); s.connect(bg.d1); s.connect(bg.d2); }
+  }
+  // 柔和和弦垫底
+  function pad(ctx, midis, t, dur, vel) {
+    midis.forEach((mm) => {
+      const o = ctx.createOscillator(); o.type = "sine"; o.frequency.value = 440 * Math.pow(2, (mm - 69) / 12);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.linearRampToValueAtTime(vel, t + 0.9);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); g.connect(ctx.destination);
+      if (bg.d1) { const s = ctx.createGain(); s.gain.value = 0.6; g.connect(s); s.connect(bg.d1); s.connect(bg.d2); }
+      o.start(t); o.stop(t + dur);
+    });
   }
   function playBgOnce() {
     const ctx = ensureBg();
     if (bg.playing) return;
-    // 60 秒安静体验进行中则不打扰
     if (document.getElementById("sixty").classList.contains("open")) return;
     bg.playing = true;
-    const bpm = 58, beat = 60 / bpm;
-    let t = ctx.currentTime + 0.25;
+    const bpm = 52, beat = 60 / bpm;
+    let t = ctx.currentTime + 0.3;
+    pad(ctx, [48, 52, 55], t, beat * 3, 0.05);
+    t += beat * 2;
     BG_NOTES.forEach(([midi, d]) => {
-      bgNote(ctx, midi, t, d * beat * 1.1, 0.32);
-      if (midi) bgNote(ctx, midi - 12, t, d * beat * 1.25, 0.1);
+      piano(ctx, midi, t, d * beat * 1.05, 0.34);
+      if (midi) {
+        piano(ctx, midi - 12, t, d * beat * 1.25, 0.08);
+        piano(ctx, midi + 7, t, d * beat * 0.9, 0.03);
+      }
       t += d * beat;
     });
-    const total = (t - ctx.currentTime) * 1000 + 900;
+    pad(ctx, [48, 52, 55, 60], t, beat * 5, 0.06);
+    const total = (t - ctx.currentTime) * 1000 + 7000;
     clearTimeout(bg.timer);
     bg.timer = setTimeout(() => { bg.playing = false; }, total);
   }
@@ -255,7 +279,7 @@
     if (bg.unlocked) return;
     bg.unlocked = true;
     playBgOnce();
-    setInterval(playBgOnce, 10 * 60 * 1000); // 每 10 分钟 1 次
+    setInterval(playBgOnce, 10 * 60 * 1000);
   }
   ["pointerdown", "touchstart", "keydown"].forEach((ev) => document.addEventListener(ev, unlockBg));
 
